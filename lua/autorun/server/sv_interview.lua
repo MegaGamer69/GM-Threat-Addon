@@ -16,14 +16,12 @@ net.Receive("JobApplication", function(Length, Player)
 		Experience = Expe
 	}
 	
-	-- Log the application
 	print("[Job Application Received]")
 	print("Full name: " .. Name)
 	print("Desired role: " .. Role)
 	print("Experience: " .. Expe)
 	print("-----------------------------------")
 	
-	-- Notify the player
 	Player:ChatPrint("Your job application has been sent! Please wait for a response.")
 end)
 
@@ -35,7 +33,6 @@ concommand.Add("threat_addon_accept_application", function(Sender, Command, Args
 		return
 	end
 	
-	-- Checa se o Nome ou ID da Steam estão no Argumento Certo
 	local TargetName = Args[1]
 	
 	if not TargetName then
@@ -44,7 +41,6 @@ concommand.Add("threat_addon_accept_application", function(Sender, Command, Args
 		return
 	end
 	
-	-- Procura pelo Jogador que Enviou
 	local TargetPlayer = nil
 	
 	for _, CurPlayer in ipairs(player.GetAll()) do
@@ -55,7 +51,6 @@ concommand.Add("threat_addon_accept_application", function(Sender, Command, Args
 		end
 	end
 	
-	-- Caso o Jogador não seja Encontrado
 	if not TargetPlayer then
 		Sender:ChatPrint("[ERROR] Player not found! Please check the name or SteamID.")
 		
@@ -73,7 +68,6 @@ concommand.Add("threat_addon_accept_application", function(Sender, Command, Args
 	print("[INFO] Accepting job application for " .. AppData.Name .. "...")
 	Sender:ChatPrint("Accepted application for: " .. AppData.Name)
 	
-	-- Notifique se o Jogador for Aceito
 	net.Start("ApplicationResponse")
 	net.WriteString("Congratulations, your application for the role '" .. AppData.Role .. "' has been accepted!")
 	net.Send(TargetPlayer)
@@ -84,6 +78,6 @@ end)
 hook.Add("PlayerInitialSpawn", "OnPlayerSpawn_RunJobInterview", function(Player)
 	if not Player.HasInterviewJobCommandRun then
 		RunConsoleCommand("threat_addon_scp_job_interview")
-		Player.HasInterviewJobCommandRun = true -- Prevent re-execution
+		Player.HasInterviewJobCommandRun = true
 	end
 end)
