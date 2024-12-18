@@ -23,7 +23,7 @@ function GetMostDistantNavPoint(Origin, Pos1, Pos2)
 		local CurDistance = Origin:DistToSqr(Point)
 
 		if CurDistance > MaxDistance then
-			MaxDistance = Distance
+			MaxDistance = CurDistance
 			MostDistantPoint = Point
 		end
 	end
