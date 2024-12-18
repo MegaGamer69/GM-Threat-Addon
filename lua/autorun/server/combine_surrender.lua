@@ -11,6 +11,26 @@ function GetEntityInventoryEmpty(Ent)
 	return table.IsEmpty(Inventory)
 end
 
+-- Função para Obter a Área do NavMesh mais Distante
+function GetMostDistantNavPoint(Origin, Pos1, Pos2)
+	local Areas = navmesh.FindInBox(Pos1, Pos2)
+
+	local MostDistantPoint = nil
+	local MaxDistance = 6400
+
+	for _, LocalArea in ipairs(Areas) do
+		local Point = LocalArea:GetRandomPoint()
+		local CurDistance = Origin:DistToSqr(Point)
+
+		if CurDistance > MaxDistance then
+			MaxDistance = Distance
+			MostDistantPoint = Point
+		end
+	end
+
+	return MostDistantPoint
+end
+
 -- Manipula o Comportamento
 function HandleCombineBehaviour(Ent)
 	if not IsValid(Ent) or Ent:GetClass() ~= "npc_combine_s" then
