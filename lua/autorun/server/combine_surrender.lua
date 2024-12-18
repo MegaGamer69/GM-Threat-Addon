@@ -36,7 +36,7 @@ function HandleCombineBehaviour(Ent)
 			local Angle = math.random(0.0, 360.0)
 			local FleeDir = Vector(math.cos(math.rad(Angle)), 0.0, math.sin(math.rad(Angle)))
 			
-			Ent:SetLastPosition(fleeDir)
+			Ent:SetLastPosition(FleeDir)
 			
 			Ent:SetSchedule(SCHED_FORCED_GO_RUN)
 			
