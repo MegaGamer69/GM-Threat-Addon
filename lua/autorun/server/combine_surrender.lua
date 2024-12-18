@@ -34,7 +34,8 @@ function HandleCombineBehaviour(Ent)
 			Ent:SetEnemy(nil)
 			
 			local Angle = math.random(0.0, 360.0)
-			local FleeDir = Vector(math.cos(math.rad(Angle)), 0.0, math.sin(math.rad(Angle)))
+			
+			FleeDir = Ent:GetPos() + Vector(math.cos(math.rad(Angle)), 0.0, math.sin(math.rad(Angle)))
 			
 			Ent:SetLastPosition(FleeDir)
 			
