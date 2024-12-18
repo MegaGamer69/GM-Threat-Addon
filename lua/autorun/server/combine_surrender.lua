@@ -54,7 +54,7 @@ function HandleCombineBehaviour(Ent)
 	end
 end
 
--- Adiciona um Gancho para Quando um NPC sofre dano
+-- Adiciona um Gancho para quando um NPC sofre Dano
 hook.Add("EntityTakeDamage", "Combine Surrender", function(target, dmginfo)
 	if target:IsNPC() then
 		HandleCombineBehaviour(target)
