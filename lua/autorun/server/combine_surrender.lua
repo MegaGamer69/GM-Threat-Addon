@@ -1,6 +1,6 @@
--- Script para permitir os soldados do Combine se renderem
+-- Script para Permitir os Soldados do Combine se Renderem
 
--- Função para checar se o inventário está vazío
+-- Função para checar se o Inventário está Vazío
 function GetEntityInventoryEmpty(Ent)
 	local Inventory = {}
 	
@@ -34,7 +34,7 @@ function HandleCombineBehaviour(Ent)
 			Ent:SetEnemy(nil)
 			
 			local Angle = math.random(0.0, 360.0)
-			local FleeDir = Ent:GetPos() + Vector(math.cos(math.rad(Angle)), math.sin(math.rad(Angle)), 0)
+			local FleeDir = Vector(math.cos(math.rad(Angle)), 0.0, math.sin(math.rad(Angle)))
 			
 			Ent:SetLastPosition(fleeDir)
 			
@@ -53,14 +53,14 @@ function HandleCombineBehaviour(Ent)
 	end
 end
 
--- Adiciona um gancho para quando um NPC sofre dano
+-- Adiciona um Gancho para Quando um NPC sofre dano
 hook.Add("EntityTakeDamage", "Combine Surrender", function(target, dmginfo)
 	if target:IsNPC() then
 		HandleCombineBehaviour(target)
 	end
 end)
 
--- Adiciona um comando de console para forçar a rendição
+-- Adiciona um Comando de Console para Forçar a Rendição
 concommand.Add("threat_combine_surrender", function(ply, cmd, args)
 	if ply:IsAdmin() and IsValid(ply) then
 		for _, Target in pairs(ents.FindByClass("npc_combine_s")) do
