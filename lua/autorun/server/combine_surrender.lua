@@ -60,7 +60,7 @@ function HandleCombineBehaviour(Ent)
 			
 			local FleeDir = GetMostDistantNavPoint(Ent:GetPos(), Pos1, Pos2)
 
-			if not FleeDir != nil then
+			if not FleeDir == nil then
 			    Ent:SetLastPosition(FleeDir)
 			else
 				print("[ERRO] nenhuma Área do NavMesh foi Encontrada :(")
