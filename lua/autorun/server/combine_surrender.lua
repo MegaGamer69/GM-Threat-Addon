@@ -16,7 +16,7 @@ function GetMostDistantNavPoint(Origin, Pos1, Pos2)
 	local Areas = navmesh.FindInBox(Pos1, Pos2)
 
 	local MostDistantPoint = nil
-	local MaxDistance = 6400
+	local MaxDistance = 0
 
 	for _, LocalArea in ipairs(Areas) do
 		local Point = LocalArea:GetRandomPoint()
@@ -54,8 +54,11 @@ function HandleCombineBehaviour(Ent)
 			Ent:SetEnemy(nil)
 			
 			local Angle = math.random(0.0, 360.0)
+
+			local Pos1 = Ent:GetPos() + Vector(6400, 6400, 0)
+			local Pos2 = Ent:GetPos() - Vector(6400, 6400, 0)
 			
-			local FleeDir = navmesh.FindInBox(Ent:GetPos(), Vector(1024, 1024, 1024))
+			local FleeDir = GetMostDistantNavPoint(Ent:GetPos(), Pos1, Pos2)
 			
 			Ent:SetLastPosition(FleeDir)
 			
