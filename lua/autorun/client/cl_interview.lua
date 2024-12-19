@@ -198,8 +198,8 @@ local function OpenJobInterview()
 	end
 end
 
-net.Receive("JobApplicationResponse", function()
-	IsRequestSended = false
+net.Receive("JobApplicationResponse", function(Length, Player)
+	Player.IsJobAccepted = string.sub(net.ReadBit)
 end)
 
 concommand.Add("threat_addon_scp_job_interview", function(Player, Command, Args)
