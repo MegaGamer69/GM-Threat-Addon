@@ -68,14 +68,71 @@ concommand.Add("threat_addon_accept_application", function(Sender, Command, Args
 	print("[INFO] Accepting job application for " .. AppData.Name .. "...")
 	Sender:ChatPrint("Accepted application for: " .. AppData.Name)
 	
-	net.Start("ApplicationResponse")
+	net.Start("JobApplicationResponse")
 	net.WriteString("Congratulations, your application for the role '" .. AppData.Role .. "' has been accepted!")
 	net.Send(TargetPlayer)
 	
 	JobApplications[TargetPlayer:SteamID()] = nil
 end)
 
-hook.Add("PlayerInitialSpawn", "OnPlayerSpawn_RunJobInterview", function(Player)
+-- Comando de Console para Recusar
+concommand.Add("threat_addon_accept_application", function(Sender, Command, Args)
+	if not Sender:IsAdmin() then
+		Sender:ChatPrint("[ERROR] You are not an admin!")
+		
+		return
+	end
+	
+	local TargetName = Args[1]
+	
+	if not TargetName then
+		Sender:ChatPrint("[ERROR] Please provide a player's name or SteamID.")
+		
+		return
+	end
+	
+	local TargetPlayer = nil
+	
+	for _, CurPlayer in ipairs(player.GetAll()) do
+		if string.find(string.lower(CurPlayer:Nick()), string.lower(TargetName)) or CurPlayer:SteamID() == TargetName then
+			TargetPlayer = CurPlayer
+			
+			break
+		end
+	end
+	
+	if not TargetPlayer then
+		Sender:ChatPrint("[ERROR] Player not found! Please check the name or SteamID.")
+		
+		return
+	end
+	
+	local AppData = JobApplications[TargetPlayer:SteamID()]
+	
+	if not AppData then
+		Sender:ChatPrint("[ERROR] Looks like that no application found for this player.")
+		
+		return
+	end
+	
+	if not Args[2] then
+		Sender:ChatPrint("[ERROR] You need to write a reason for reject this job")
+		
+		return
+	end
+	
+	print("[INFO] Rejecting job application for " .. AppData.Name .. "...")
+	Sender:ChatPrint("Rejected application for: " .. AppData.Name)
+	
+	net.Start("JobApplicationResponse")
+	net.WriteString("Unfortunately, your application for the role '" .. AppData.Role .. "' has been rejected! Reason: " .. Args[2])
+	net.WriteBit(false)
+	net.Send(TargetPlayer)
+	
+	JobApplications[TargetPlayer:SteamID()] = nil
+end)
+
+hook.Add("PlayerInitialSpawn", "RunJobInterview", function(Player)
 	if not Player.HasInterviewJobCommandRun then
 		RunConsoleCommand("threat_addon_scp_job_interview")
 		Player.HasInterviewJobCommandRun = true
