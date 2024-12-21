@@ -76,7 +76,7 @@ concommand.Add("threat_addon_accept_application", function(Sender, Command, Args
 end)
 
 -- Comando de Console para Recusar
-concommand.Add("threat_addon_accept_application", function(Sender, Command, Args)
+concommand.Add("threat_addon_reject_application", function(Sender, Command, Args)
 	if not Sender:IsAdmin() then
 		Sender:ChatPrint("[ERROR] You are not an admin!")
 		
