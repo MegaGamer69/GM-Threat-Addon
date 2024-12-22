@@ -55,19 +55,8 @@ function UpdateCombineAllies()
 	end
 end
 
--- Variavel Local do Temporizador
-local Timer = 0.0
-
 -- Temporizador Regular para Verificar os Jogadores Aliados no Lado do Cliente
-if SERVER then
-	while true do
-		Timer = Timer + 0.01
-	
-		if Timer == AllyCheckInterval then
-			UpdateCombineAllies()
-		end
-	end
-end
+timer.Create("Check Allies", AllyCheckInterval, 0, UpdateCombineAllies)
 
 -- Comando para Atualizar Manualmente
 concommand.Add("update_combine_ally", function()
