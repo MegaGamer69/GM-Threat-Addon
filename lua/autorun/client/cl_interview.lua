@@ -1,5 +1,6 @@
 local IsRequestSended = false
 local CurLanguage = "Portuguese"
+local RequestedRole = ""
 
 local Translations = {
 	["Portuguese"] = {
@@ -10,7 +11,7 @@ local Translations = {
 		RoleList = {
 			O5Commander = "Comadante O5",
 			MTFGuard = "Guarda M.T.F.",
-			Searcher = "Pesiquisador(a)"
+			Searcher = "Pesquisador(a)"
 		},
 		ExpeLabel = "Descreva sua experiência com seu emprego anterior:",
 		Submit = "Enviar formulário",
@@ -72,7 +73,7 @@ local Translations = {
 			"Please carefully review these conditions before proceeding with your application."
 		},
 		ErrorMsg = "Please fill in all fields!",
-		WarnMsg = "Form submitted successfully!",
+		WarnMsg = "Please, wait by your request to be read!",
 		SuccessMsg = "Form successfully submitted!",
 		ToggleLang = "Switch language"
 	}
@@ -104,13 +105,17 @@ local function OpenJobInterview()
 	RoleLabel:SetText(Translations[CurLanguage].RoleLabel)
 	RoleLabel:SetPos(20, 130)
 	RoleLabel:SizeToContents()
+	RoleLabel.OnSelect = function(_, Index, Value, Data)
+		SelectedRole = Data
+	end
 	
 	local RoleEntry = vgui.Create("DComboBox", Window)
 	RoleEntry:SetPos(20, 150)
 	RoleEntry:SetSize(460, 25)
-	RoleEntry:AddChoice(Translations[CurLanguage].RoleList.Searcher)
-	RoleEntry:AddChoice(Translations[CurLanguage].RoleList.MTFGuard)
-	RoleEntry:AddChoice(Translations[CurLanguage].RoleList.O5Commander)
+	
+	for Key, Text in ipairs(Translations[CurLanguage].RoleList) do
+		RoleEntry:AddChoice(Text, Key)
+	end
 	
 	local ExpeLabel = vgui.Create("DLabel", Window)
 	ExpeLabel:SetText(Translations[CurLanguage].ExpeLabel)
